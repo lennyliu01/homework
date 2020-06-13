@@ -56,31 +56,28 @@ class Chopsticks(Game):
         self.is_player1_first = is_player1_first
         self.state = { 'Player 1': {'right_hand': 1,'left_hand':1},'Player 2': {'right_hand': 1, 'left_hand':1}}
     
-    def oppsite_player(self,player):
-        if player == 'Player 1':
-            return 'Player 2'
-        else:
-            return 'Player 1'
-    
-    def get_possible_moves(self,player):
-        player_hands  = []
-        oppsite_hands = []
-        for k,v in self.state[player].items():
-            if v < 5:
-                player_hands.append(k)
-        for k,v in self.state[self.oppsite_player(player)].items():
-            if v < 5:
-                oppsite_hands.append(k)
-        moves = {}
-        n=1
-        for i in range(len(player_hands)):
-            for j in range(len(oppsite_hands)):
-                moves.update({n: player + ' ' + player_hands[i] + ' touches ' + self.oppsite_player(player) + ' ' + oppsite_hands[j]})
-                n += 1
+    def get_possible_moves(self):
+        moves = {'Player 1':[],'Player 2':[]}
+        hands ={}
+        for k,v in state.items():
+            hands.update({k:list(v.keys())})
+        for item in hands['Player 1']:
+            moves['Player 1'].append({item:hands['Player 2']})
+        for item in hands['Player 2']:
+            moves['Player 2'].append({item:hands['Player 1']})
         return moves
     
     def make_move(self, move):
-        pass
+        #move = [player, player hand,opposite hand]
+        increment = self.state[self.get_current_player][move[1]]
+        self.is_player1_first = not self.is_player1_first
+        self.state[self.get_current_player][move[2]] = increment+ self.state[opposite_player][move[2]]
+        if self.state[self.get_current_player][move[2]] >= 5:
+            self.state.pop([self.get_current_player][move[2]])
+
+    def is_winner(self, player):
+        if self.state[get_current_player] == None:
+            return True
             
    
     
