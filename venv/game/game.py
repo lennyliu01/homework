@@ -65,14 +65,14 @@ class Chopsticks(Game):
             hands.update({k:list(v.keys())})
         # hands = dict{Player 1:[all hands]},{Player 2:[all hands]}}
         # example {'Player 1': ['right_hand', 'left_hand'], 'Player 2': ['right_hand']} 
-        moves = {'Player 1':[],'Player 2':[]}
+        moves = {'Player 1':[],'Player 2':[]}   
         for item in hands['Player 1']:
             moves['Player 1'].append({item:hands['Player 2']})
         for item in hands['Player 2']:
             moves['Player 2'].append({item:hands['Player 1']})
         return moves
         '''
-        example 
+        example
         {
         'Player 1': [{'right_hand': ['right_hand']}, {'left_hand': ['right_hand']}], 
         'Player 2': [{'right_hand': ['right_hand', 'left_hand']}]
@@ -83,8 +83,9 @@ class Chopsticks(Game):
         increment = self.state[self.get_current_player][move[1]]
         self.is_player1_first = not self.is_player1_first
         self.state[self.get_current_player][move[2]] = increment+ self.state[opposite_player][move[2]]
-        if self.state[self.get_current_player][move[2]] >= 5:
-            self.state.pop([self.get_current_player][move[2]])
+        if self.state[self.get_current_player][move[2]] >= 5: #if the opposite hand value is greater than 5
+            for key in state:
+                state[key].pop(move[2]) #remove this dead hand from self.state
 
     def is_winner(self, player):
         if self.state[get_current_player] == None:
