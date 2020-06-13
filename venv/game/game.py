@@ -79,11 +79,11 @@ class Chopsticks(Game):
         }
         '''
     def make_move(self, move):
-        #move = [player, player hand,opposite hand]
-        increment = self.state[self.get_current_player][move[1]]
+        #move = [player hand,opposite hand]
+        increment = self.state[self.get_current_player][move[0]]
         self.is_player1_first = not self.is_player1_first
-        self.state[self.get_current_player][move[2]] = increment+ self.state[opposite_player][move[2]]
-        if self.state[self.get_current_player][move[2]] >= 5: #if the opposite hand value is greater than 5
+        self.state[self.get_current_player][move[1]] = increment+ self.state[opposite_player][move[1]]
+        if self.state[self.get_current_player][move[1]] >= 5: #if the opposite hand value is greater than 5
             for key in state:
                 state[key].pop(move[2]) #remove this dead hand from self.state
 
