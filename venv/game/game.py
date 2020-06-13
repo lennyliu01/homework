@@ -24,7 +24,7 @@ class SubtractSquare(Game):
 
     def get_possible_moves(self):
         result = []
-        for i in range(self.state):
+        for i in range(self.state+1):
             if 0 < i ** 2 <= self.state:
                 result.append(i**2)
         return result
@@ -50,3 +50,4 @@ class SubtractSquare(Game):
             return True
         if player == "Player 2" and not self.is_player1_first:
             return False
+       
