@@ -56,17 +56,28 @@ class Chopsticks(Game):
         self.is_player1_first = is_player1_first
         self.state = { 'Player 1': {'right_hand': 1,'left_hand':1},'Player 2': {'right_hand': 1, 'left_hand':1}}
     
+    def get_state(self):  #why get state
+        return self.state
+    
     def get_possible_moves(self):
-        moves = {'Player 1':[],'Player 2':[]}
         hands ={}
         for k,v in state.items():
             hands.update({k:list(v.keys())})
+        # hands = dict{Player 1:[all hands]},{Player 2:[all hands]}}
+        # example {'Player 1': ['right_hand', 'left_hand'], 'Player 2': ['right_hand']} 
+        moves = {'Player 1':[],'Player 2':[]}
         for item in hands['Player 1']:
             moves['Player 1'].append({item:hands['Player 2']})
         for item in hands['Player 2']:
             moves['Player 2'].append({item:hands['Player 1']})
         return moves
-    
+        '''
+        example 
+        {
+        'Player 1': [{'right_hand': ['right_hand']}, {'left_hand': ['right_hand']}], 
+        'Player 2': [{'right_hand': ['right_hand', 'left_hand']}]
+        }
+        '''
     def make_move(self, move):
         #move = [player, player hand,opposite hand]
         increment = self.state[self.get_current_player][move[1]]
